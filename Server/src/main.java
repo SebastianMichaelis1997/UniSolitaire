@@ -1,3 +1,5 @@
+package Server;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,26 +22,21 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 
 public class main {
 
-
 	public static void main(String[] args) {
 		System.out.println("Programmstart");
 		Map<String, String> AuthCodes = new HashMap<String, String>();
 		List<GameData> Games = new ArrayList<GameData>();
 		Map<Integer, String> Seeds = new HashMap<Integer, String>();
-		
+
 		ServerSocket server;
 		System.out.println("Socket erstellt");
-/*/
-		Random rnd1 = new Random(123),
-			   rnd2 = new Random(123);
-		
-		for (int i = 0; i<10; i++)
-		{
-			System.out.println(rnd1.nextInt());
-			System.out.println(rnd2.nextInt());
-		}
-		/*/
-		
+		/*
+		 * / Random rnd1 = new Random(123), rnd2 = new Random(123);
+		 * 
+		 * for (int i = 0; i<10; i++) { System.out.println(rnd1.nextInt());
+		 * System.out.println(rnd2.nextInt()); } /
+		 */
+
 		try {
 
 			System.out.println("Starte Einlesen...");
@@ -51,24 +48,24 @@ public class main {
 				fr = new FileReader("AuthCodes.txt");
 				br = new BufferedReader(fr);
 				String Line;
-				while((Line = br.readLine()) != null)
-				{
+				while ((Line = br.readLine()) != null) {
 					String[] parts = Line.split(";;;");
 					AuthCodes.put(parts[0], parts[1]);
 				}
 				br.close();
 				fr.close();
-			} catch (FileNotFoundException e) { System.out.println("Datei nicht gefunden!"); }
-
+			} catch (FileNotFoundException e) {
+				System.out.println("Datei nicht gefunden!");
+			}
 
 			try {
 				System.out.println("... Games");
 				fr = new FileReader("Games.txt");
 				br = new BufferedReader(fr);
 				String Line;
-				while((Line = br.readLine()) != null)
-				{
-					//fr.write(Game.authCode + ";;;" + Game.duration + ";;;" + Game.moves + ";;;" + Game.date + "\n");
+				while ((Line = br.readLine()) != null) {
+					// fr.write(Game.authCode + ";;;" + Game.duration + ";;;" + Game.moves + ";;;" +
+					// Game.date + "\n");
 					String[] parts = Line.split(";;;");
 					GameData g = new GameData();
 					g.authCode = parts[0];
@@ -79,12 +76,13 @@ public class main {
 				}
 				br.close();
 				fr.close();
-			} catch (FileNotFoundException e) { System.out.println("Datei nicht gefunden!"); }
+			} catch (FileNotFoundException e) {
+				System.out.println("Datei nicht gefunden!");
+			}
 
 			server = new ServerSocket(1345);
 			System.out.println("Server initialisiert auf Port " + server.getLocalPort());
-			
-			
+
 			boolean run = true;
 
 			while (run) {
@@ -124,7 +122,7 @@ public class main {
 
 					if (in.nextLine() == "0") {
 						System.out.println("Neuer Seed");
-						
+
 						int[] Seed = new int[15];
 						Random rnd = new Random(System.currentTimeMillis());
 
@@ -141,13 +139,10 @@ public class main {
 
 						System.out.println("Gebe Seed aus");
 						int Pos = Integer.parseInt(in.nextLine());
-						if (Seeds.containsKey(Pos))
-						{
+						if (Seeds.containsKey(Pos)) {
 							out.println(Seeds.get(Pos));
 							System.out.println("Seed: " + Seeds.get(Pos));
-						}
-						else
-						{
+						} else {
 							System.out.println("Seed nicht gefunden");
 							out.println("0");
 						}
@@ -223,6 +218,6 @@ public class main {
 			e.printStackTrace();
 			return;
 		}
-		//*/
+		// */
 	}
 }
