@@ -64,7 +64,8 @@ public class main {
 				br = new BufferedReader(fr);
 				String Line;
 				while ((Line = br.readLine()) != null) {
-					// fr.write(Game.authCode + ";;;" + Game.duration + ";;;" + Game.moves + ";;;" +
+					// fr.write(Game.authCode + ";;;" + Game.duration + ";;;" +
+					// Game.moves + ";;;" +
 					// Game.date + "\n");
 					String[] parts = Line.split(";;;");
 					GameData g = new GameData();
@@ -81,7 +82,8 @@ public class main {
 			}
 
 			server = new ServerSocket(1345);
-			System.out.println("Server initialisiert auf Port " + server.getLocalPort());
+			System.out.println("Server initialisiert auf Port "
+					+ server.getLocalPort());
 
 			boolean run = true;
 
@@ -91,11 +93,12 @@ public class main {
 				System.out.println("Client verbunden");
 
 				Scanner in = new Scanner(client.getInputStream());
-				PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+				PrintWriter out = new PrintWriter(client.getOutputStream(),
+						true);
 
 				String Line = in.nextLine();
 
-				if (Line == "register") {
+				if (Line.equals("register")) {
 					System.out.println("Neuen AuthCode registrieren: ");
 					// in "register"
 					// in Username
@@ -113,14 +116,14 @@ public class main {
 					System.out.println("AuthCode: " + AuthCode.toString());
 					System.out.println("Name: " + name);
 					out.println(AuthCode);
-				} else if (Line == "seed") {
+				} else if (Line.equals("seed")) {
 					System.out.println("Abfrage eines Seeds");
 					// in "seed"
 					// in Number - Nummer des Seeds, sonst 0, dann neu
 					// out Seed
 					// out Pos, wenn neu
 
-					if (in.nextLine() == "0") {
+					if (in.nextLine().equals("0")) {
 						System.out.println("Neuer Seed");
 
 						int[] Seed = new int[15];
@@ -206,7 +209,8 @@ public class main {
 				System.out.println("Games");
 				fw = new FileWriter("Games.txt");
 				for (GameData Game : Games)
-					fw.write(Game.authCode + ";;;" + Game.duration + ";;;" + Game.moves + ";;;" + Game.date + "\n");
+					fw.write(Game.authCode + ";;;" + Game.duration + ";;;"
+							+ Game.moves + ";;;" + Game.date + "\n");
 				fw.close();
 			} catch (IOException e) {
 				System.err.println("Could not create File.");
