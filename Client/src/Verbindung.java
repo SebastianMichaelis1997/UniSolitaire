@@ -12,7 +12,7 @@ public class Verbindung {
 	public static Socket connect() {
 
 		try {
-			System.out.println("connect");
+			// System.out.println("connect");
 			Socket client = new Socket("localhost", 1345);
 			System.out.println("connected");
 
@@ -53,14 +53,21 @@ public class Verbindung {
 		// Authcode
 		try {
 			Socket s = connect();
-
+			System.out.println("ist connected");
 			Scanner in = new Scanner(s.getInputStream());
 			PrintWriter out = new PrintWriter(s.getOutputStream());
 
 			out.println("register");
 			out.println(name);
+			System.out.println("Daten gesendet");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			String AuthCode = in.nextLine();
-
+			System.out.println("AuthCode gesendet");
 			s.close();
 			in.close();
 			return AuthCode;
